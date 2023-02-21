@@ -15,14 +15,6 @@ import java.util.Map;
  */
 public class Q2347_最好的扑克牌手 {
 
-  public static void main(String[] args) {
-    char[] suits = new char[]{'d','a','a','b','c'};
-    Arrays.sort(suits);
-    for (char suit : suits) {
-      System.out.println(suit);
-    }
-  }
-
   public String bestHand(int[] ranks, char[] suits) {
     Arrays.sort(ranks);
     Arrays.sort(suits);
