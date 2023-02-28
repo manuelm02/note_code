@@ -10,6 +10,37 @@ import com.manuel.note_code.leet_code.lib.ListNode;
 public class Q206_反转链表 {
 
   /**
+   * Practice 递归
+   */
+  public ListNode reverseListPractice_1(ListNode head) {
+    if (head == null || head.next == null) {
+      return head;
+    }
+    ListNode ret = reverseListPractice_1(head.next);
+    head.next.next = head;
+    head.next = null;
+    return ret;
+  }
+
+  /**
+   * Practice 双指针
+   */
+  public ListNode reverseListPractice_2(ListNode head) {
+    if (head == null) {
+      return null;
+    }
+    ListNode prev = head;
+    ListNode cur = null;
+    while (prev != null) {
+      ListNode node = prev.next;
+      prev.next = cur;
+      cur = prev;
+      prev = node;
+    }
+    return cur;
+  }
+
+  /**
    * 特殊的双指针
    * @param head
    * @return
