@@ -13,7 +13,7 @@ package com.manuel.note_code.leet_code.array;
  * <p>
  * 所设计的解决方案必须只使用常量级的额外空间
  */
-public class Q两数之和_II_输入有序数组 {
+public class Q167两数之和_II_输入有序数组 {
 
   /**
    * 双指针，往中间位移
