@@ -1,4 +1,4 @@
-package com.manuel.note_code.leet_code.array;
+package com.manuel.note_code.leet_code.动态规划;
 
 /**
  * @Author: manuel
