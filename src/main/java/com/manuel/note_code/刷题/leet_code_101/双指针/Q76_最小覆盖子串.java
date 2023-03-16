@@ -13,6 +13,39 @@ public class Q76_最小覆盖子串 {
   public static String minWindow(String s, String t) {
     int[] chars = new int[128];
     boolean[] flag = new boolean[128];
+    int tLen = t.length();
+    int sLen = s.length();
+    for (int i = 0; i < tLen; i++) {
+      ++chars[t.charAt(i)];
+      flag[t.charAt(i)] = true;
+    }
+    int count = 0;
+    int l = 0;
+    int minL = 0;
+    int minSize = sLen + 1;
+    for (int r = 0; r < sLen; r++) {
+      if (flag[s.charAt(r)]) {
+        if (--chars[s.charAt(r)] >= 0) {
+          ++count;
+        }
+        while (count == tLen) {
+          if (r - l + 1 < minSize) {
+            minL = l;
+            minSize = r - l + 1;
+          }
+          if (flag[s.charAt(l)] && ++chars[s.charAt(l)] > 0) {
+            --count;
+          }
+          ++l;
+        }
+      }
+    }
+    return minSize > sLen ? "" : s.substring(minL, minL + minSize);
+  }
+
+  public static String minWindow1(String s, String t) {
+    int[] chars = new int[128];
+    boolean[] flag = new boolean[128];
     // 先统计t中的字符情况
     int tLen = t.length();
     int sLen = s.length();
