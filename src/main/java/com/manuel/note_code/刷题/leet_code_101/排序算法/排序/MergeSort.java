@@ -1,4 +1,4 @@
-package com.manuel.note_code.刷题.leet_code_101.排序算法;
+package com.manuel.note_code.刷题.leet_code_101.排序算法.排序;
 
 import java.util.Arrays;
 
