@@ -16,7 +16,7 @@ public class Q215_数组中的第K个最大元素 {
     int r = nums.length - 1;
     int target = nums.length - k;
     while (l < r) {
-      int mid = quickSelection(nums, l, r);
+      int mid = quickSelect_practice(nums, l, r);
       if (mid == target) {
         return nums[mid];
       }
@@ -27,6 +27,28 @@ public class Q215_数组中的第K个最大元素 {
       }
     }
     return nums[l];
+  }
+
+  private int quickSelect_practice(int[] nums, int l, int r) {
+    int num = nums[l];
+    int first = l;
+    int last = r;
+    while (first < last) {
+      while (first < last && nums[last] > num) {
+        --last;
+      }
+      if (first < last) {
+        nums[first++] = nums[last];
+      }
+      while (first < last && nums[first] < num) {
+        ++first;
+      }
+      if (first < last) {
+        nums[last--] = nums[first];
+      }
+    }
+    nums[first] = num;
+    return first;
   }
 
   private int quickSelection(int[] nums, int l, int r) {

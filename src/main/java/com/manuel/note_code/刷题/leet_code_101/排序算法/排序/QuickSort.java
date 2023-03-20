@@ -7,7 +7,34 @@ package com.manuel.note_code.刷题.leet_code_101.排序算法.排序;
  */
 public class QuickSort {
   public static void quickSort(int[] nums) {
-    quickSort(nums, 0, nums.length - 1);
+    //quickSort(nums, 0, nums.length - 1);
+    quickSort_practice(nums, 0, nums.length - 1);
+  }
+
+  private static void quickSort_practice(int[] nums, int l, int r) {
+    if (l >= r) {
+      return;
+    }
+    int num = nums[l];
+    int first = l;
+    int last = r;
+    while (first < last) {
+      while (first < last && nums[last] > num) {
+        --last;
+      }
+      if (first < last) {
+        nums[first++] = nums[last];
+      }
+      while (first < last && nums[first] < num) {
+        ++first;
+      }
+      if (first < last) {
+        nums[last--] = nums[first];
+      }
+    }
+    nums[first] = num;
+    quickSort_practice(nums, l, first - 1);
+    quickSort_practice(nums, first + 1, r);
   }
 
   private static void quickSort(int[] nums, int l, int r) {
