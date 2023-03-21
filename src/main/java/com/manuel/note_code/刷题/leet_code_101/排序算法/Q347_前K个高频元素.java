@@ -18,58 +18,46 @@ import java.util.PriorityQueue;
 public class Q347_前K个高频元素 {
 
   // TODO(manuelm02)
-  //public int[] topKFrequent(int[] nums, int k) {
-  //  Map<Integer, Integer> occurrences = new HashMap<>();
-  //  for (int num : nums) {
-  //    occurrences.put(num, occurrences.getOrDefault(num, 0) + 1);
-  //  }
-  //  List<int[]> values = new ArrayList<>();
-  //  for (Map.Entry<Integer, Integer> entry : occurrences.entrySet()) {
-  //    int num = entry.getKey();
-  //    int count = entry.getValue();
-  //    values.add(new int[]{num, count});
-  //  }
-  //  int[] result = new int[k];
-  //  int len = values.size();
-  //  quickSort(values, 0, len - 1, k, result, 0);
-  //  return result;
-  //}
+  public int[] topKFrequent(int[] nums, int k) {
+    Map<Integer, Integer> occurrences = new HashMap<>();
+    for (int num : nums) {
+      occurrences.put(num, occurrences.getOrDefault(num, 0) + 1);
+    }
+    List<int[]> values = new ArrayList<>();
+    for (Map.Entry<Integer, Integer> entry : occurrences.entrySet()) {
+      int num = entry.getKey();
+      int count = entry.getValue();
+      values.add(new int[]{num, count});
+    }
+    int[] result = new int[k];
+    int len = values.size();
+    quickSort(values, 0, len - 1, k, result, 0);
+    return result;
+  }
 
-  //private void quickSort(List<int[]> values, int start, int end, int k, int[] result, int resultIndex) {
-  //  int[] pick = values.get(0);
-  //  int pivot = pick[1];
-  //  int first = start;
-  //  int last = end;
-  //  while (first < last) {
-  //    while (first < last && values.get(last)[1] > pivot) {
-  //      --last;
-  //    }
-  //    if (first < last) {
-  //      values.set(first++, values.get(last));
-  //    }
-  //    while (first < last && values.get(first)[1] < pivot) {
-  //      ++first;
-  //    }
-  //    if (first < last) {
-  //      values.set(last--, values.get(first));
-  //    }
-  //  }
-  //  values.set(first, pick);
-  //  int len = values.size();
-  //  if (k <= len - first + 1) {
-  //    quickSort(values, first + 1, end, k, result, resultIndex);
-  //  } else {
-  //    for (int i = end; i >= first ; i--) {
-  //      result[resultIndex++] = values.get(i)[0];
-  //    }
-  //    if (k > len - first + 1) {
-  //      quickSort(values, start, first - 1, k, result, resultIndex);
-  //    }
-  //    //result[len - first - 1] = pick[0];
-  //    //quickSort(values, 0, first - 1, k, result);
-  //    //quickSort(values, first + 1, end, k, result);
-  //  }
-  //}
+  private void quickSort(List<int[]> values, int start, int end, int k, int[] result, int resultIndex) {
+    int[] pick = values.get(0);
+    int pivot = pick[1];
+    int index = start;
+    for (int i = start + 1; i <= end; i++) {
+      if (values.get(i)[1] >= pivot) {
+        Collections.swap(values, index + 1, i);
+        index++;
+      }
+    }
+    Collections.swap(values, start, index);
+
+    if (k <= index - start) {
+      quickSort(values, start, index - 1, k, result, resultIndex);
+    } else {
+      for (int i = start; i <= index; i++) {
+        result[resultIndex++] = values.get(i)[0];
+      }
+      if (k > index - start + 1) {
+        quickSort(values, index + 1, end, k - (index - start + 1), result, resultIndex);
+      }
+    }
+  }
 
   /**
    * 最大堆（int[] [0]存储num [1]存储个数）
