@@ -1,4 +1,4 @@
-package com.manuel.note_code.刷题.leet_code_101.搜索;
+package com.manuel.note_code.刷题.leet_code_101.搜索.深度优先搜索;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
