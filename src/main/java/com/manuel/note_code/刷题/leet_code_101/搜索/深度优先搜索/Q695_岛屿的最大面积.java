@@ -19,6 +19,72 @@ public class Q695_岛屿的最大面积 {
 
   int[] indexI = new int[]{0, 0, -1, 1};
   int[] indexJ = new int[]{1, -1, 0, 0};
+  int m;
+  int n;
+
+  public int maxAreaOfIsland_practice(int[][] grid) {
+    if (grid == null || grid[0] == null) {
+      return 0;
+    }
+    this.m = grid.length;
+    this.n = grid[0].length;
+    int localArea = 0;
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        localArea = Math.max(localArea, dfs_practice(grid, i, j));
+      }
+    }
+    return localArea;
+  }
+
+  private int dfs_practice(int[][] grid, int curI, int curJ) {
+    if (curI < 0 || curJ < 0 || curI == m || curJ == n || grid[curI][curJ] != 1) {
+      return 0;
+    }
+    int curArea = 1;
+    grid[curI][curJ] = 0;
+    for (int i = 0; i < 4; i++) {
+      int nextI = curI + indexI[i];
+      int nextJ = curJ + indexJ[i];
+      curArea += dfs_practice(grid, nextI, nextJ);
+    }
+    return curArea;
+  }
+
+  public int maxAreaOfIsland_practice1(int[][] grid) {
+    if (grid == null || grid[0] == null) {
+      return 0;
+    }
+    int m = grid.length;
+    int n = grid[0].length;
+    int localArea = 0;
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        int area = 0;
+        Deque<Integer> stackI = new ArrayDeque<>();
+        Deque<Integer> stackJ = new ArrayDeque<>();
+        stackI.push(i);
+        stackJ.push(j);
+        while (!stackI.isEmpty()) {
+          int curI = stackI.pop();
+          int curJ = stackJ.pop();
+          if (curI < 0 || curJ < 0 || curI == m || curJ == n || grid[curI][curJ] != 1) {
+            continue;
+          }
+          ++area;
+          grid[curI][curJ] = 0;
+          for (int index = 0; index < 4; index++) {
+            int nextI = curI + indexI[index];
+            int nextJ = curJ + indexJ[index];
+            stackI.push(nextI);
+            stackJ.push(nextJ);
+          }
+        }
+        localArea = Math.max(localArea, area);
+      }
+    }
+    return localArea;
+  }
 
   /**
    * 用递归代替栈

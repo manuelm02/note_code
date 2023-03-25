@@ -20,6 +20,58 @@ public class Q417_太平洋大西洋水流问题 {
   int[][] heights;
   int m;
   int n;
+
+  public List<List<Integer>> pacificAtlantic_practice(int[][] heights) {
+    this.heights = heights;
+    this.m = heights.length;
+    this.n = heights[0].length;
+    // 对应单元格（i，j）是否可以流入海洋 （pacific，atlantic）
+    boolean[][] pacific = new boolean[m][n];
+    boolean[][] atlantic = new boolean[m][n];
+    // 左边
+    for (int i = 0; i < m; i++) {
+      dfs_practice(0, i, pacific);
+    }
+    // 上边
+    for (int i = 1; i < n; i++) {
+      dfs_practice(i, 0, pacific);
+    }
+    // 右边
+    for (int i = 0; i < m; i++) {
+      dfs_practice(n - 1, i, atlantic);
+    }
+    // 下边
+    for (int i = 0; i < n - 1; i++) {
+      dfs_practice(i, m - 1, atlantic);
+    }
+    List<List<Integer>> result = new ArrayList<>();
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (pacific[i][j] && atlantic[i][j]) {
+          List<Integer> cell = new ArrayList<>();
+          cell.add(i);
+          cell.add(j);
+          result.add(cell);
+        }
+      }
+    }
+    return result;
+  }
+
+  private void dfs_practice(int column, int row, boolean[][] ocean) {
+    if (ocean[row][column]) {
+      return;
+    }
+    ocean[row][column] = true;
+    for (int[] dir : dirs) {
+      int nextRow = row + dir[0];
+      int nextColumn = column + dir[1];
+      if (nextRow >= 0 && nextColumn >= 0 && nextRow < m && nextColumn < n && heights[row][column] <= heights[nextRow][nextColumn]){
+        dfs_practice(nextColumn, nextRow, ocean);
+      }
+    }
+  }
+
   public List<List<Integer>> pacificAtlantic(int[][] heights) {
     this.heights = heights;
     this.m = heights.length;
