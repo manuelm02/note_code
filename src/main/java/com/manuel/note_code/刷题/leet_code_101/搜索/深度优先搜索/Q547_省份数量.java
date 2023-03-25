@@ -15,6 +15,28 @@ package com.manuel.note_code.刷题.leet_code_101.搜索.深度优先搜索;
  */
 public class Q547_省份数量 {
 
+  public int findCircleNum_practice(int[][] isConnected) {
+    int cities = isConnected.length;
+    boolean[] visited = new boolean[cities];
+    int provinces = 0;
+    for (int i = 0; i < cities; i++) {
+      if (!visited[i]) {
+        dfs_practice(isConnected, visited, cities, i);
+        ++provinces;
+      }
+    }
+    return provinces;
+  }
+
+  private void dfs_practice(int[][] isConnected, boolean[] visited, int cities, int index) {
+    visited[index] = true;
+    for (int i = 0; i < cities; i++) {
+      if (isConnected[index][i] == 1 && !visited[i]) {
+        dfs_practice(isConnected, visited, cities, i);
+      }
+    }
+  }
+
   public int findCircleNum(int[][] isConnected) {
     int cities = isConnected.length;
     int provinces = 0;
