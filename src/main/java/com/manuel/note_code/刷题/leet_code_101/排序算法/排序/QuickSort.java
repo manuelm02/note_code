@@ -11,6 +11,32 @@ public class QuickSort {
     quickSort_practice(nums, 0, nums.length - 1);
   }
 
+  private static void quickSort_practice1(int[] nums, int l, int r) {
+    if (l >= r) {
+      return;
+    }
+    int first = l;
+    int last = r;
+    int num = nums[l];
+    while (first < last) {
+      while (first < last && nums[last] > num) {
+        --last;
+      }
+      if (first < last) {
+        nums[first++] = nums[last];
+      }
+      while (first < last && nums[first] < num) {
+        ++first;
+      }
+      if (first < last) {
+        nums[last--] = nums[first];
+      }
+    }
+    nums[first] = num;
+    quickSort_practice1(nums, l, first - 1);
+    quickSort_practice1(nums, first + 1, r);
+  }
+
   private static void quickSort_practice(int[] nums, int l, int r) {
     if (l >= r) {
       return;

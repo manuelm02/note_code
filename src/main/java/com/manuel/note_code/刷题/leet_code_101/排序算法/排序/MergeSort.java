@@ -11,7 +11,30 @@ public class MergeSort {
   public static void mergeSort(int[] nums) {
     int len = nums.length;
     int[] temp = new int[len];
-    mergeSort(nums, temp, 0, len);
+    //mergeSort(nums, temp, 0, len);
+    mergeSort_practice(nums, temp, 0, len);
+  }
+
+  private static void mergeSort_practice(int[] nums, int[] temp, int l, int r) {
+    if (r - l <= 1) {
+      return;
+    }
+    int mid = l + (r - l) / 2;
+    mergeSort_practice(nums, temp, l, mid);
+    mergeSort_practice(nums, temp, mid, r);
+    int first = l;
+    int second = mid;
+    int index = l;
+    while (first < mid || second < r) {
+      if (second >= r || (first < mid && nums[first] <= nums[second])) {
+        temp[index++] = nums[first++];
+      } else {
+        temp[index++] = nums[second++];
+      }
+    }
+    for (int i = l; i < r; i++) {
+      nums[i] = temp[i];
+    }
   }
 
   private static void mergeSort(int[] nums, int[] temp, int l, int r) {
