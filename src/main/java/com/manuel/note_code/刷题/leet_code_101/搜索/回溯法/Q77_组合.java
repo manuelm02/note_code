@@ -20,6 +20,30 @@ public class Q77_组合 {
       return result;
     }
     Deque<Integer> path = new ArrayDeque<>();
+    dfs_practice(result, path, n, k, 1);
+    return result;
+  }
+
+  private void dfs_practice(List<List<Integer>> result, Deque<Integer> path, int n, int k, int start) {
+    if (path.size() == k) {
+      result.add(new ArrayList<>(path));
+      return;
+    }
+    // 上界 + (k - path.size()) - 1 = n
+    // 上界 = n + 1 - (k - path.size())
+    for (int i = start; i <= n - (k - path.size()) + 1; i++) {
+      path.push(i);
+      dfs_practice(result, path, n, k, i + 1);
+      path.pop();
+    }
+  }
+
+  public List<List<Integer>> combine1(int n, int k) {
+    List<List<Integer>> result = new ArrayList<>();
+    if (k <= 0 || n < k) {
+      return result;
+    }
+    Deque<Integer> path = new ArrayDeque<>();
     dfs(n, k, 1, path, result);
     return result;
   }
