@@ -9,15 +9,53 @@ package com.manuel.note_code.刷题.leet_code_101.搜索.回溯法;
  * 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
  */
 public class Q79_单词搜索 {
-  char[][] board;
   int m;
   int n;
+  int[][] dir = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+  public boolean exist_practice(char[][] board, String word) {
+    if (board == null || board[0] == null) {
+      return false;
+    }
+    this.m = board.length;
+    this.n = board[0].length;
+    boolean[][] visited = new boolean[m][n];
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        boolean flag = backtrack_practice(board, visited, word, i, j, 0);
+        if (flag) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  private boolean backtrack_practice(char[][] board, boolean[][] visited, String word, int i, int j, int pos) {
+    if (board[i][j] != word.charAt(pos)) {
+      return false;
+    } else if (pos == word.length() - 1) {
+      return true;
+    }
+    visited[i][j] = true;
+    boolean result = false;
+    for (int[] ints : dir) {
+      int nextI = i + ints[0];
+      int nextJ = j + ints[1];
+      boolean flag = backtrack_practice(board, visited, word, nextI, nextJ, pos + 1);
+      if (flag) {
+        result = true;
+        break;
+      }
+    }
+    visited[i][j] = false;
+    return result;
+  }
 
   public boolean exist(char[][] board, String word) {
     if (board == null || board[0] == null) {
       return false;
     }
-    this.board = board;
     this.m = board.length;
     this.n = board[0].length;
     boolean[][] visited = new boolean[m][n];
